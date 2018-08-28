@@ -1,13 +1,13 @@
 """
-State-Value Function
+    Author: Tianbing Xu (xutianbing@baidu.com)
+    Created on: 2018-08-01
 
-Written by Patrick Coady (pat-coady.github.io)
+    Copyright (c) Baidu.com, Inc. All Rights Reserved
+    Utilities to process rollout data
 """
-
 import tensorflow as tf
 import numpy as np
 from sklearn.utils import shuffle
-
 
 class NNValueFunction(object):
     """ NN-based state-value function """

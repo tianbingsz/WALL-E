@@ -1,3 +1,9 @@
+"""
+    Author: Tianbing Xu (xutianbing@baidu.com)
+    Created on: 2018-08-28
+
+    Copyright (c) Baidu.com, Inc. All Rights Reserved
+"""
 import numpy as np
 import tensorflow as tf
 import gym

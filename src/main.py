@@ -1,3 +1,9 @@
+"""
+    Author: Tianbing Xu (xutianbing@baidu.com)
+    Created on: 2018-08-15
+
+    Copyright (c) Baidu.com, Inc. All Rights Reserved
+"""
 #! /usr/bin/env python3
 
 import gym
