@@ -1,6 +1,6 @@
 ## WALL-E
-* Contributors: Tianbing Xu, Andrew Zhang
-* An Efficient yet simple Reinforcement Learning Research Framework codebase with potential applications in Robotics and so on.
+* Contributors: Tianbing Xu (Baidu Research, CA), Andrew Zhang (Stanford University, CA), Liang Zhao (Baidu Research, CA)
+* An Efficient fast yet simple Reinforcement Learning Research Framework codebase with potential applications in Robotics and so on.
 
 ## Dependencies
 
@@ -18,16 +18,17 @@ cd ./src
 python main.py HalfCheetah-v2 -it 1000 -b 10000
 ```
 
-#### Multi-Process, Parallel Sampler
+#### Multi-Process, Parallel Sampler (10 Processes)
 ```
 cd ./src
 python run_parallel_main.py HalfCheetah-v2 -it 1000 -b 1000 -n 10
 ```
 
-#### plot curve
+#### Plot Curve
 
 
 ## Reference
+* Danijar Hafner, James Davidson, Vincent Vanhoucke, "TensorFlow Agents: Efficient Batched Reinforcement Learning in TensorFlow"
 * Kevin Frans, Danijar Hafner, "Speeding Up TRPO Through Parallelization and Parameter Adaptation"
 * Hao Liu, Yihao Feng, Yi Mao, Dengyong Zhou, Jian Peng, Qiang Liu,
 "Action-depedent Control Variates for Policy Optimization via Stein's Identity"
