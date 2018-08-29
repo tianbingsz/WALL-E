@@ -10,7 +10,7 @@ repos:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
     -   id: autopep8-wrapper
-    -   id: check-docstring-first
+    #-   id: check-docstring-first
     -   id: check-json
     -   id: check-yaml
     #-   id: debug-statements
@@ -20,7 +20,3 @@ repos:
     -   id: check-symlinks
     -   id: check-merge-conflict
     -   id: check-added-large-files
-#-   repo: https://github.com/asottile/add-training-comma
-#    rev: v0.6.4
-#    hooks:
-#    -   id: add-trailing-comma
