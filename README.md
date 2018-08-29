@@ -10,7 +10,8 @@
 * gym - [installation instructions](https://gym.openai.com/docs)
 * [MuJoCo](http://www.mujoco.org/) (30-day trial available and free to students)
 * Pickle
-* Refer to requirements.txt for details
+
+Refer to requirements.txt for more details.
 
 ### Running Command
 
