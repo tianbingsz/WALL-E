@@ -1,4 +1,13 @@
 """
+    Author: Tianbing Xu (xutianbing@baidu.com)
+    Created on: 2018-08-02
+
+    Copyright (c) Baidu.com, Inc. All Rights Reserved
+"""
+import matplotlib.pyplot as plt
+
+
+"""
 Short Plotting Routine to Plot Pandas Dataframes by Column Label
 
 1. Takes list of dateframes to compare multiple trials
@@ -6,9 +15,6 @@ Short Plotting Routine to Plot Pandas Dataframes by Column Label
 3. Legend location and y-axis limits can be customized
 
 """
-import matplotlib.pyplot as plt
-
-
 def df_plot(dfs, x, ys, ylim=None, legend_loc='best'):
     """ Plot y vs. x curves from pandas dataframe(s)
 
