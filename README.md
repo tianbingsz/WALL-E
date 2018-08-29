@@ -1,6 +1,6 @@
 ## WALL-E
 * Contributors: Tianbing Xu, Andrew Zhang
-* An Efficient yet simple Reinforcement Learning Research Framework codebase.
+* An Efficient yet simple Reinforcement Learning Research Framework codebase with potential applications in Robotics and so on.
 
 ## Dependencies
 
