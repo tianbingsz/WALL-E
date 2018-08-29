@@ -1,7 +1,7 @@
 # Config file for pre-commit:
-# 1. Install pre-commit with conda install -c conda-forge pre_commit
-# 2. Rename .git/hooks/pre-commit.sample to .git/hooks/pre-commit
-# 3. Add this file to root of git repository and modify git hooks as necessary
+# 1. Install pre-commit with "conda install -c conda-forge pre_commit"
+# 2. Copy and replace ./.git/hooks/pre-commit.sample with hooks/pre-commit file
+# 3. Add this file to root of git repository and modify enabled hooks as necessary
 
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
