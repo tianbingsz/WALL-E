@@ -1,6 +1,6 @@
 ## WALL-E
 * Contributors: Tianbing Xu (Baidu Research, CA), Andrew Zhang (Stanford University, CA), Liang Zhao (Baidu Research, CA)
-* An Efficient fast yet simple Reinforcement Learning Research Framework codebase with potential applications in Robotics and so on.
+* An Efficient, Fast, yet Simple Reinforcement Learning Research Framework codebase with potential applications in Robotics and beyond.
 
 ## Dependencies
 
@@ -9,6 +9,8 @@
 * TensorFlow
 * gym - [installation instructions](https://gym.openai.com/docs)
 * [MuJoCo](http://www.mujoco.org/) (30-day trial available and free to students)
+* Pickle
+* Refer to requirements.txt for details
 
 ### Running Command
 
@@ -25,7 +27,10 @@ python run_parallel_main.py HalfCheetah-v2 -it 1000 -b 1000 -n 10
 ```
 
 #### Plot Curve
-
+```
+cd ./src/experiment
+python plotcurve.py -x xvariable -i /path-to-log/ -o fig.png
+```
 
 ## Reference
 * Danijar Hafner, James Davidson, Vincent Vanhoucke, "TensorFlow Agents: Efficient Batched Reinforcement Learning in TensorFlow"
