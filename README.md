@@ -31,6 +31,7 @@ python run_parallel_main.py HalfCheetah-v2 -it 1000 -b 1000 -n 10
 ```
 cd ./src/experiment
 python plotcurve.py -x xvariable -i /path-to-log/ -o fig.png
+python plotcurve_cmp.py -x xvariable -i /path-to-log/ -b /path-to-baseline-log/ -o fig.png 
 ```
 
 ## Reference
