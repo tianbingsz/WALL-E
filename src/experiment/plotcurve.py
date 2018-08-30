@@ -128,7 +128,7 @@ def main(argv):
         xlabel = ['_Episode']
     xvars_dict = init_xvars()
 
-    input_dir = "/home/tianbing/github/PPO/src/log-files/"
+    input_dir = "/home/tianbing/github/wall-e/src/log-files/"
     inputfiles = [input_dir + inputfile + "/log.csv" for inputfile in args.inputs]
     plot_average_return(args.key, xlabel, xvars_dict, inputfiles[0], outputfile)
 
