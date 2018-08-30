@@ -72,7 +72,7 @@ def plot_average_return(key, xlabel, legend_label, inputfile):
     pyplot.plot(x_axis, returns, linewidth=3.0, label=legend_label)
 
 
-def plot_multiple_average_return(keys, xlabel, xvars_dict, inputfile, basefile, outputfile):
+def plot_multiple_average_return(keys, xlabel, xvars_dict, inputfiles, basefile, outputfile):
     if not keys:
         key = '_MeanReward'
     else:
@@ -85,7 +85,9 @@ def plot_multiple_average_return(keys, xlabel, xvars_dict, inputfile, basefile, 
     
     legend_labels =['num-process 10', 'num-process 1']
 
-    plot_average_return(key, xlabel[0], legend_labels[0], inputfile)
+    for ifile in inputfiles:
+        plot_average_return(key, xlabel[0], legend_labels[0], ifile)
+
     plot_average_return(key, xlabel[0], legend_labels[1], basefile)
 
     pyplot.title('average return over ' + str(adjx))
@@ -152,11 +154,11 @@ def main(argv):
         xlabel = ['_Episode']
     xvars_dict = init_xvars()
 
-    input_dir = "/home/tianbing/github/PPO/src/log-files/"
+    input_dir = "/home/tianbing/github/wall-e/src/log-files/"
     inputfiles = [input_dir + inputfile + "/log.csv" for inputfile in args.inputs]
     basefiles = [input_dir + basefile + "/log.csv" for basefile in
                  args.baselines]
-    plot_multiple_average_return(args.key, xlabel, xvars_dict, inputfiles[0], basefiles[0], outputfile)
+    plot_multiple_average_return(args.key, xlabel, xvars_dict, inputfiles, basefiles[0], outputfile)
 
 
 if __name__ == "__main__":
