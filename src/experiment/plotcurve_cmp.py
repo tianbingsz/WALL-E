@@ -55,7 +55,7 @@ def init_xvars():
         '_lr_multiplier': 'learning rate multiplier'}
     return d
 
-def plot_average_return(key, xlabel, legend_label, inputfile):
+def plot_average_return(key, xlabel, num_proc, inputfile):
     # read inputfile
     print("open inputfile ", inputfile)
     with open(inputfile, 'r') as f:
@@ -63,6 +63,10 @@ def plot_average_return(key, xlabel, legend_label, inputfile):
     # data[0] header
     if len(data) < 2:
         return
+    
+    num_iterations = round(len(data) / 1000) * 1000
+    batch_size = int(int(data[1][data[0].index('Steps')]) / int(num_proc)) # number of processors
+    legend_label = "-i " + str(num_iterations) + " -b " + str(batch_size) + " -n " + str(num_proc)
 
     rIdx = data[0].index(key)
     returns = np.array([d[rIdx] for d in data[1::]], dtype='float32')
@@ -82,13 +86,13 @@ def plot_multiple_average_return(keys, xlabel, xvars_dict, inputfiles, basefile,
         adjx = xvars_dict[xlabel[0]]
     else:
         adjx = xlabel[0]
-    
-    legend_labels =['num-process 10', 'num-process 1']
+
+    num_proc = ['10']
 
     for ifile in inputfiles:
-        plot_average_return(key, xlabel[0], legend_labels[0], ifile)
+        plot_average_return(key, xlabel[0], num_proc[0], ifile)
 
-    plot_average_return(key, xlabel[0], legend_labels[1], basefile)
+    plot_average_return(key, xlabel[0], num_proc[0], basefile)
 
     pyplot.title('average return over ' + str(adjx))
     pyplot.xlabel(adjx)
