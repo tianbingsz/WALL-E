@@ -13,6 +13,12 @@
 
 Refer to requirements.txt for more details.
 
+If you are using `conda`
+```
+conda env create -f conda_walle.yml --prefix=`which conda`/../../envs/walle
+source activate walle
+```
+
 ### Running Command
 
 #### Single Process
