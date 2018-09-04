@@ -13,7 +13,7 @@ import os
 import time
 from datetime import datetime
 from util.utils import Logger
-from env.parallel_sampler import ParallelSampler
+from memory.parallel_sampler import ParallelSampler
 from policy.mlp_policy import Policy
 from agent.parallel_ppo import PPO
 from multiprocessing import Queue, JoinableQueue

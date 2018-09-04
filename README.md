@@ -2,6 +2,13 @@
 * Contributors: Tianbing Xu (Baidu Research, CA), Andrew Zhang (Stanford University), Liang Zhao (Baidu Research, CA), Lenjoy (Houzz), Shunan Zhang(Apple).
 * An Efficient, Fast, yet Simple Reinforcement Learning Research Framework codebase with potential applications in Robotics and beyond.
 
+## Motivations:
+This is a long term Reinfocement Learning project focusing on developping an efficient yet simple RL framework to support
+the ongoing RL research related to systems, methodologies and so on.
+The first completed milestone is to speedup RL with multi-process architecture support. In RL, the time to collect expereince
+by running policy on the environment MDP is a bottleneck, it takes much more time compared to the computaions of policy learning on GPU.
+With the multi-process support, we are able to collect experience parallelly and thus to reduce the data collection time nearly linearly.
+
 ## Dependencies
 
 * Python 3.6
@@ -21,15 +28,17 @@ source activate walle
 
 ### Running Command
 
-#### Single Process
+#### Single Process, using one CPU to collect experience
 ```
 cd ./src
+CUDA_VISIBLE_DEVICES=0
 python main.py HalfCheetah-v2 -it 1000 -b 10000
 ```
 
-#### Multi-Process, Parallel Sampler (10 Processes)
+#### Multi-Process, Parallel Sampler (10 CPU Processes to collect experience)
 ```
 cd ./src
+CUDA_VISIBLE_DEVICES=0
 python run_parallel_main.py HalfCheetah-v2 -it 1000 -b 1000 -n 10
 ```
 
@@ -37,7 +46,7 @@ python run_parallel_main.py HalfCheetah-v2 -it 1000 -b 1000 -n 10
 ```
 cd ./src/experiment
 python plotcurve.py -x xvariable -i /path-to-log/ -o fig.png
-python plotcurve_cmp.py -x xvariable -i /path-to-log/ -b /path-to-baseline-log/ -o fig.png 
+python plotcurve_cmp.py -x xvariable -i /path-to-log/ -b /path-to-baseline-log/ -o fig.png
 ```
 
 ## Reference

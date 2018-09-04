@@ -9,7 +9,7 @@
 import gym
 from policy.policy import Policy
 from agent.ppo import PPO
-from env.sampler import Sampler
+from memory.sampler import Sampler
 from util.utils import Logger, Scaler
 from datetime import datetime
 import os
