@@ -49,6 +49,9 @@ python plotcurve.py -x xvariable -i /path-to-log/ -o fig.png
 python plotcurve_cmp.py -x xvariable -i /path-to-log/ -b /path-to-baseline-log/ -o fig.png
 ```
 
+#### Results on Half-Cheetah-V2
+![Compare the performance between number of process=10 vs 1](https://github.com/tianbingsz/WALL-E/Doc/cmp-cheetah-08-30-n=10-vs-n=1.png)
+
 ## Reference
 * Danijar Hafner, James Davidson, Vincent Vanhoucke, "TensorFlow Agents: Efficient Batched Reinforcement Learning in TensorFlow"
 * Kevin Frans, Danijar Hafner, "Speeding Up TRPO Through Parallelization and Parameter Adaptation"
