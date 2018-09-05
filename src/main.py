@@ -6,7 +6,7 @@
 """
 #! /usr/bin/env python3
 
-import gym
+from env.gym_env import GymEnv
 from policy.policy import Policy
 from agent.ppo import PPO
 from memory.sampler import Sampler
@@ -26,22 +26,6 @@ class GracefulKiller:
     def exit_gracefully(self, signum, frame):
         self.kill_now = True
 
-def init_gym(env_name):
-    """
-    Initialize gym environment, return dimension of observation
-    and action spaces.
-    Args:
-        env_name: str environment name (e.g. "Humanoid-v1")
-    Returns: 3-tuple
-        gym environment (object)
-        number of observation dimensions (int)
-        number of action dimensions (int)
-    """
-    env = gym.make(env_name)
-    # add 1 to obs dimension for time step feature
-    obs_dim = env.observation_space.shape[0] + 1
-    act_dim = env.action_space.shape[0]
-    return env, obs_dim, act_dim
 
 def main(env_name,
          num_iteration,
@@ -69,17 +53,17 @@ def main(env_name,
         animate: boolean, True uses env.render() method to animate episode
     """
     killer = GracefulKiller()
-    env, obs_dim, act_dim = init_gym(env_name)
+    gymEnv = GymEnv(env_name);
     now = datetime.utcnow().strftime("%b-%d_%H:%M:%S")  # create unique directories
     logger = Logger(logname="SingleProc"+env_name, now=now)
     aigym_path = os.path.join('log-files/gym', env_name, now)
-    env=gym.wrappers.Monitor(env, aigym_path, force=True, video_callable=False)
-    scaler = Scaler(obs_dim)
+    env = gymEnv.wrapper(aigym_path, force=True, video_callable=False)
+    scaler = Scaler(gymEnv.obs_dim)
 
     policy_size = "large"
     if env_name in ['Humanoid-v2', 'HumanoidStandup-v2', 'Ant-v2']:
         policy_size = "small"
-    policy = Policy(obs_dim, act_dim, kl_targ, hid1_mult,
+    policy = Policy(gymEnv.obs_dim, gymEnv.act_dim, kl_targ, hid1_mult,
                     policy_logvar, policy_size)
     # sampler to generate rollouts by exex policy on Env
     sampler = Sampler(env, policy, scaler, max_step, batch_size, animate)
@@ -92,7 +76,7 @@ def main(env_name,
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description = ('PPO for OpenAI Gym Envs'))
+        description = ('PPO Agent for OpenAI Gym Envs'))
 
     parser.add_argument('env_name', type=str, help='OpenAI Gym environment name')
     parser.add_argument('-e', '--epochs', type=float, help='num of mini-batch iterations',

@@ -5,7 +5,6 @@
     Copyright (c) Baidu.com, Inc. All Rights Reserved
 """
 import tensorflow as tf
-import gym
 import numpy as np
 from random import randint
 import scipy.signal
@@ -13,6 +12,7 @@ import string
 import time
 from multiprocessing import Process, Queue, JoinableQueue, Event
 from util.utils import SetPolicyWeights, fully_connected, Scaler
+from env.gym_env import GymEnv
 
 class Sampler(Process):
     """
@@ -48,7 +48,7 @@ class Sampler(Process):
         self.weights_ready_event = weights_ready_event
 
         self.scope = "policy{}".format(self.sid)
-        self.env_name = env_name
+        self.gymEnv = GymEnv(env_name)
         self.policy = policy
 
         self.max_step = max_step
@@ -71,8 +71,7 @@ class Sampler(Process):
         """
             inherit from run of Process, keep sampler running async
         """
-        self.env = gym.make(self.env_name)
-        self.env.seed(randint(0,999999))
+        self.gymEnv.seed(randint(0,999999))
         # TODO, env.monitor
         self._build_policy_nn()
         self._sample()
@@ -206,7 +205,7 @@ class Sampler(Process):
             unscaled_obs: useful for training scaler,
                         shape = (episode len, obs_dim)
         """
-        obs = self.env.reset()
+        obs = self.gymEnv.env.reset()
         observes, actions, rewards, unscaled_obs = [], [], [], []
         done = False
         step = 0.0
@@ -217,7 +216,7 @@ class Sampler(Process):
 
         for _ in range(self.max_step):
             if self.animate:
-                env.render()
+                self.gymEnv.env.render()
             obs = obs.astype(np.float32).reshape((1, -1))
             obs = np.append(obs, [[step]], axis=1) # add time step feature
             unscaled_obs.append(obs)
@@ -225,7 +224,7 @@ class Sampler(Process):
             observes.append(obs)
             action = self.sample(sess, obs).reshape((1, -1)).astype(np.float32)
             actions.append(action)
-            obs, reward, done, _ = self.env.step(np.squeeze(action, axis=0))
+            obs, reward, done, _ = self.gymEnv.env.step(np.squeeze(action, axis=0))
             if not isinstance(reward, float):
                 reward = np.asscalar(reward)
             rewards.append(reward)

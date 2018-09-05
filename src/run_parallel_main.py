@@ -6,33 +6,17 @@
 """
 import numpy as np
 import tensorflow as tf
-import gym
 import argparse
 import json
 import os
 import time
 from datetime import datetime
 from util.utils import Logger
+from env.gym_env import GymEnv
 from memory.parallel_sampler import ParallelSampler
 from policy.mlp_policy import Policy
 from agent.parallel_ppo import PPO
 from multiprocessing import Queue, JoinableQueue
-
-def init_gym(env_name):
-    """ Initialize gym environment, return dimension of
-        observation and action spaces.
-    Args:
-        env_name: str environment name (e.g. "Humanoid-v2")
-    Returns: 3-tuple
-        gym environment (object)
-        number of observation dimensions (int)
-        number of action dimensions (int)
-    """
-    env = gym.make(env_name)
-    # add 1 to obs dimension for time step feature
-    obs_dim = env.observation_space.shape[0] + 1
-    act_dim = env.action_space.shape[0]
-    return env, obs_dim, act_dim
 
 def main(n_sampler,
          env_name,
@@ -61,17 +45,15 @@ def main(n_sampler,
         epochs: num of mini-batch iterations
         animate: boolean, True uses env.render() method to animate episode
     """
-    env, obs_dim, act_dim = init_gym(env_name)
+    gymEnv = GymEnv(env_name)
     # create unique directories
     now = datetime.utcnow().strftime("%b-%d_%H:%M:%S")
     logger = Logger(logname='MultProc'+env_name, now=now)
-    aigym_path = os.path.join('log-files/gym', env_name, now)
-    env = gym.wrappers.Monitor(env, aigym_path, force=True,video_callable=False)
     policy_size = "large"
     if env_name in ['Humanoid-v2', 'HumanoidStandup-v2', 'Ant-v2']:
         policy_size = "small"
     # MLP policy network
-    policy = Policy(obs_dim, act_dim, kl_targ, hid1_mult,
+    policy = Policy(gymEnv.obs_dim, gymEnv.act_dim, kl_targ, hid1_mult,
             policy_logvar, policy_size)
 
     # rollouts or agent commands
