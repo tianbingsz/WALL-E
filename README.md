@@ -3,9 +3,9 @@
 * An Efficient, Fast, yet Simple Reinforcement Learning Research Framework codebase with potential applications in Robotics and beyond.
 
 ## Motivations:
-This is a long term Reinfocement Learning project focused on developing an efficient yet simple RL framework to support
-the ongoing RL research related to systems, methodologies, and so on.
-The first completed milestone is speding up RL with multi-process architecture support. In RL, the time to collect experience by running a policy on the environment MDP is a bottleneck, taking much more time compared to the computations of policy learning on GPU. With the multi-process support, we are able to collect experience in parallel and thus reduce the data collection time by a near linear factor.
+This is a long term Reinfocement Learning project focused on developing an efficient, yet simple RL framework to support
+the ongoing RL research related to systems, methodologies, et cetera.
+The first completed milestone is speding up RL with multi-process architectural support. In RL, the time to collect experience by running a policy on the environment MDP is a bottleneck, taking much more time compared to the computations of policy learning on GPU. With the multi-process support, we are able to collect experience in parallel and thus reduce the data collection time by a near linear factor.
 
 ## Reinforcement Learning Architecture Design
 ### General Reinforcement Learning Framework
