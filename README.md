@@ -60,7 +60,6 @@ python plotcurve_cmp.py -x xvariable -i /path-to-log/ -b /path-to-baseline-log/ 
 ```
 
 #### Results on Mujoco Tasks 
-* 10 Processes VS 1 Process.
 ![HalfCheetah](https://user-images.githubusercontent.com/3246048/45062531-322ca080-b05e-11e8-9d97-fd29e04bb690.png)
 
 * Running Time for collecting 20K samples per iteration.
@@ -68,7 +67,7 @@ python plotcurve_cmp.py -x xvariable -i /path-to-log/ -b /path-to-baseline-log/ 
 
 * Speedup for collecting 20K samples per iteration. The running time is very accurate as it is fast, 
 and there is variance from the asynchronously nature and Queue I/O. The basic conclusion is that experience
-collection speedup w.r.t. CPU numbers is near linear.
+collection speedup w.r.t. CPU numbers is near linear (while not over-linear).
 ![cmp-cheetah-speedup](https://user-images.githubusercontent.com/22249000/45120823-1f74a300-b114-11e8-9035-913a872a45fb.png)
 
 ## Reference
