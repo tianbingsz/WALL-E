@@ -65,7 +65,7 @@ python plotcurve_cmp.py -x xvariable -i /path-to-log/ -b /path-to-baseline-log/ 
 * Running Time for collecting 20K samples per iteration.
 ![cmp-cheetah-time](https://user-images.githubusercontent.com/22249000/45120794-09ff7900-b114-11e8-8d5d-42c60321d8fe.png)
 
-* Speedup for collecting 20K samples per iteration. The running time is very accurate as it is fast, 
+* Speedup for collecting 20K samples per iteration. The running time is not very accurate as it is fast, 
 and there is variance from the asynchronously nature and Queue I/O. The basic conclusion is that experience
 collection speedup w.r.t. CPU numbers is near linear (while not over-linear).
 ![cmp-cheetah-speedup](https://user-images.githubusercontent.com/22249000/45120823-1f74a300-b114-11e8-9035-913a872a45fb.png)
