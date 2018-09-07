@@ -5,7 +5,7 @@
 ## Motivations:
 This is a long term Reinfocement Learning project focused on developing an efficient, yet simple RL framework to support
 the ongoing RL research related to systems, methodologies, et cetera.
-The first completed milestone is speding up RL with multi-process architectural support. In RL, the time to collect experience by running a policy on the environment MDP is a bottleneck, taking much more time compared to the computations of policy learning on GPU. With the multi-process support, we are able to collect experience in parallel and thus reduce the data collection time by a near linear factor.
+The first completed milestone is speding up RL with multi-process architectural support. In RL, the time to collect experience by running a policy on the environment MDP is a bottleneck, taking much more time compared to the computations of policy learning on GPU. With the multi-process support, we are able to collect experience in parallel and thus reduce the data collection time by a *near linear* factor.
 
 ## Reinforcement Learning Architecture Design
 ### General Reinforcement Learning Framework
@@ -69,6 +69,16 @@ python plotcurve_cmp.py -x xvariable -i /path-to-log/ -b /path-to-baseline-log/ 
 and there is variance from the asynchronously nature and Queue I/O. The basic conclusion is that experience
 collection speedup w.r.t. CPU numbers is near linear (while not over-linear).
 ![cmp-cheetah-speedup](https://user-images.githubusercontent.com/22249000/45120823-1f74a300-b114-11e8-9035-913a872a45fb.png)
+
+* As we can see, the average policy learning time per iteration is about 0.04 min and keeps almost 
+the same for different number of processors.
+
+![learn-time](https://user-images.githubusercontent.com/22249000/45246002-be83d100-b2b3-11e8-8fc3-4bc63cd38d3a.png)
+
+* With the increasing number of processors to collect experience, the experience collection time is *near-linearly* reduced. 
+Experience collection time is no longer the bottleneck. Instead, the policy learning time takes more and more perecentages and becomes the bottleneck of total running time. 
+
+![time-ratio](https://user-images.githubusercontent.com/22249000/45245842-081fec00-b2b3-11e8-93d4-621431fc0af1.png)
 
 ## Reference
 * Danijar Hafner, James Davidson, Vincent Vanhoucke, "TensorFlow Agents: Efficient Batched Reinforcement Learning in TensorFlow"
