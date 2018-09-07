@@ -78,7 +78,7 @@ the same for different number of processors.
 * With the increasing number of processors to collect experience, the experience collection time is *near-linearly* reduced. 
 Experience collection time is no longer the bottleneck. Instead, the policy learning time takes more and more perecentages and becomes the bottleneck of total running time. 
 
-![time-ratio](https://user-images.githubusercontent.com/22249000/45245842-081fec00-b2b3-11e8-93d4-621431fc0af1.png)
+![time-percentage](https://user-images.githubusercontent.com/22249000/45247066-ccd4eb80-b2b9-11e8-98f5-f60e78ba3767.png)
 
 ## Reference
 * Danijar Hafner, James Davidson, Vincent Vanhoucke, "TensorFlow Agents: Efficient Batched Reinforcement Learning in TensorFlow"
