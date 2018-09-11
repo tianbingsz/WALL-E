@@ -1,4 +1,4 @@
-## WALL-E ([report](../blob/master/Doc/report.pdf))
+## WALL-E ([report](../master/Doc/report.pdf))
 * Contributors: Tianbing Xu (Baidu Research, CA), Andrew Zhang (Stanford University), Liang Zhao (Baidu Research, CA), Lenjoy (Houzz), Shunan Zhang (Apple).
 * An Efficient, Fast, yet Simple Reinforcement Learning Research Framework codebase with potential applications in Robotics and beyond.
 
