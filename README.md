@@ -1,6 +1,6 @@
 ## WALL-E ([report](../master/walle_report.pdf))
 * Major Contributors: Tianbing Xu (Baidu Research, CA), initiates the project, writes the most of code.
-* Collaborators: Andrew Zhang (Stanford University), Shunan Zhang (Apple).
+* Collaborators: Liang Zhao (Baidu Research, CA), Andrew Zhang (Stanford University), Shunan Zhang (Apple).
 * An Efficient, Fast, yet Simple Reinforcement Learning Research Framework codebase with potential applications in Robotics and beyond.
 
 ## Motivations:
