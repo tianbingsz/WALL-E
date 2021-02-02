@@ -3,7 +3,7 @@ aspy.yaml==1.1.1
 astor==0.6.2
 atari-py==0.1.1
 baselines==0.1.5
-bleach==1.5.0
+bleach==3.3.0
 cached-property==1.4.3
 certifi==2018.4.16
 cffi==1.11.5
