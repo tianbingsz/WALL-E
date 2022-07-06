@@ -20,7 +20,7 @@ glfw==1.6.0
 grpcio==1.12.0
 gym==0.10.5
 h5py==2.8.0
-html5lib==0.9999999
+html5lib==0.999999999
 identify==1.1.4
 idna==2.6
 imageio==2.3.0
