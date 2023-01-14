@@ -45,69 +45,59 @@ def main(n_sampler,
         epochs: num of mini-batch iterations
         animate: boolean, True uses env.render() method to animate episode
     """
-    gymEnv = GymEnv(env_name)
-    # create unique directories
-    now = datetime.utcnow().strftime("%b-%d_%H:%M:%S")
-    logger = Logger(logname='MultProc'+env_name, now=now)
-    policy_size = "large"
-    if env_name in ['Humanoid-v2', 'HumanoidStandup-v2', 'Ant-v2']:
-        policy_size = "small"
-    # MLP policy network
-    policy = Policy(gymEnv.obs_dim, gymEnv.act_dim, kl_targ, hid1_mult,
-            policy_logvar, policy_size)
+    # Create environment
+    env = GymEnv(env_name, max_step=max_step, animate=animate)
+    # Create policy
+    policy = Policy(env.obs_dim, env.act_dim, hid1_mult=hid1_mult,
+                    log_std=policy_logvar)
+    # Create agent
+    agent = PPO(policy, env, gamma=gamma, lam=lam, kl_targ=kl_targ,
+                epochs=epochs, batch_size=batch_size)
+    # Create sampler
+    sampler = ParallelSampler(n_sampler, env_name, max_step=max_step)
+    # Create logger
+    logger = Logger(logname='ppo', logdir='./log/')
+    # Create saver
+    saver = tf.train.Saver(max_to_keep=5)
+    # Create session
+    sess = tf.Session()
+    # Initialize variables
+    sess.run(tf.global_variables_initializer())
+    # Start sampler
+    sampler.start()
+    # Start training
+    total_steps = 0
+    for i in range(num_iteration):
+        # Sample rollouts
+        print('Sampling...')
+        start_time = time.time()
+        rollout = sampler.sample(agent, sess)
+        print('Sampled in %.3f seconds' % (time.time() - start_time))
+        # Update policy
+        print('Updating policy...')
+        start_time = time.time()
+        agent.update(rollout, sess)
+        print('Updated in %.3f seconds' % (time.time() - start_time))
+        # Log
+        total_steps += rollout['ep_len'].sum()
+        logger.log_tabular('Iteration', i)
+        logger.log_tabular('TotalSteps', total_steps)
+        logger.log_tabular('EpLenMean', rollout['ep_len'].mean())
+        logger.log_tabular('EpRewMean', rollout['ep_rew'].mean())
+        logger.log_tabular('KL', agent.kl)
+        logger.log_tabular('Entropy', agent.entropy)
+        logger.log_tabular('ClipFrac', agent.clipfrac)
+        logger.log_tabular('StopIter', agent.stop_iter)
+        logger.log_tabular('Time', time.time() - start_time)
+        logger.dump_tabular()
 
-    # rollouts or agent commands
-    agent_tasks = JoinableQueue()
-    # communcaiton of policy weights
-    agent_results = Queue()
-    # PPO Agent Process run async
-    agent = PPO(agent_tasks, agent_results, policy, logger,
-        num_iteration, epochs, gamma, lam, max_step)
-    agent.start()
+        if i % 10 == 0:
+            saver.save(sess, './log/ppo/model.ckpt', global_step=i)
 
-    # generate rollouts in parallel (by each process)
-    pSampler = ParallelSampler(n_sampler, env_name, policy,
-                                max_step, batch_size, animate)
-    # get init policy weights
-    agent_tasks.put(1)
-    agent_tasks.join()
-    init_weights = agent_results.get()
-    pSampler.set_policy_weights(init_weights)
-
-    total_time = 0.0
-    for iter in range(num_iteration):
-        print("-------- Iteration {} ----------".format(iter))
-        agent.set_total_time(total_time)
-
-        # runs a bunch of async processes that collect rollouts
-        print("-------- Generate rollouts in Parallel ------")
-        rollout_start = time.time()
-        rollouts = pSampler.gen_rollouts()
-        rollout_time = (time.time() - rollout_start) / 60.0
-
-        # agent receive rollouts and update policy async
-        learn_start = time.time()
-        # save rollouts generating from parallel samplers
-        agent_tasks.put(rollouts)
-        agent_tasks.join()
-        learn_time = (time.time() - learn_start) / 60.0
-
-        # read policy weights from agent Queue
-        print("-------- Get policy weights from Agent ------")
-        new_policy_weights = agent_results.get()
-        #TODO, save policy weights, calc totalsteps
-        print("-------- Update policy weights to Samplers -----\n\n")
-        pSampler.set_policy_weights(new_policy_weights)
-        total_time += (time.time() - rollout_start) / 60.0
-        print("Total time: {}  mins, Rollout time: {}, Learn time: {}".format(
-            total_time, rollout_time, learn_time))
-
-    logger.close()
-    # exit parallel sampler
-    pSampler.exit()
-    #TODO, save policy weights
-    # exit ppo agent
-    agent.exit()
+    # Stop sampler
+    sampler.stop()
+    # Close session
+    sess.close()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Parallel RL Framework (PPO)')
